@@ -3,20 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Distance Calculator</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/light-inflate/1.1.2/light-inflate.min.css">
+    <title>r3.OlaMaps</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700&display=swap">
     <style>
+        
         body {
-            font-family: Arial, sans-serif;
-            text-align: center;
+            font-family: 'Open Sans', sans-serif;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 0;
         }
         .container {
             max-width: 400px;
             margin: 40px auto;
             padding: 20px;
+            background-color: #fff;
             border: 1px solid #ddd;
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .header {
+            background-color: #333;
+            color: #fff;
+            padding: 10px;
+            text-align: center;
+            border-radius: 10px 10px 0 0;
+        }
+        .header h1 {
+            font-size: 24px;
+            font-weight: bold;
+            margin: 0;
         }
         .form-group {
             margin-bottom: 20px;
@@ -40,16 +56,29 @@
             background-color: #3e8e41;
         }
         .result {
-            font-size: 24px;
+            font-size: 18px;
             font-weight: bold;
             margin-top: 20px;
+            text-align: center;
+        }
+        .footer {
+            background-color: #333;
+            color: #ffffff ;
+            padding: 10px;
+            text-align: center;
+            clear: both;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h2>Distance Calculator</h2>
-        <form action="" method="post">
+        <div class="header">
+            <h1>Ola Maps Distance Calculator</h1>
+        </div>
+        <form action="" method="post" autocomplete="off">
             <div class="form-group">
                 <label for="source">Source:</label>
                 <input type="text" id="source" name="source" class="form-control" placeholder="Enter source address">
@@ -61,17 +90,22 @@
             <button type="submit" class="btn">Calculate Distance</button>
         </form>
         
-        {% if distance %}
         <div class="result">
+            {% if distance %}
+            Source: {{ source }} ({{ source_lat }}, {{ source_long }})
+            <br>
+            Destination: {{ destination }} ({{ dest_lat }}, {{ dest_long }})
+            <br>
             Distance by Great Circle: {{ distance }} km
-        </div>
-        {% endif %}
-        {% if ola_distance %}
-        <div class="result">
+            {% endif %}
+            <br>
+            {% if ola_distance %}
             Distance by Ola Maps: {{ ola_distance }} km
+            {% endif %}
         </div>
-        {% endif %}
     </div>
-
+    <div class="footer">
+        Made with ♥ by r3
+    </div>
 </body>
 </html>

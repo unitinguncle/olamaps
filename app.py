@@ -41,8 +41,6 @@ def get_oladistance(source_lat, source_lng, destination_lat, destination_lng):
     origin_encoded = urllib.parse.quote(origin)
     destination_encoded = urllib.parse.quote(destination)
 
-    #url = f"https://api.olamaps.io/routing/v1/directions?origin=22.529923,88.346142&destination=19.115354,72.873658&mode=driving&alternatives=false&steps=false&overview=full&language=en&traffic_metadata=false&api_key=wko8RH3XmUxdfV5cbCHMJdbYTIh7c59dn34xh7kH"
-    
     #url = f"https://api.olamaps.io/routing/v1/directions?origin={origin_encoded}&destination={destination_encoded}&mode=driving&alternatives=false&steps=false&overview=full&language=en&traffic_metadata=false&api_key={api_key}"
     
     url = f"https://api.olamaps.io/routing/v1/distanceMatrix?origins={origin_encoded}&destinations={destination_encoded}&api_key={api_key}"
@@ -72,6 +70,9 @@ def index():
     ola_distance = None
     source_coords = None
     destination_coords = None
+    source_address = ""
+    destination_address = ""
+    source_lat, source_lng, destination_lat, destination_lng = None, None, None, None
     if request.method == 'POST':
         source_address = request.form['source']
         destination_address = request.form['destination']
@@ -88,8 +89,11 @@ def index():
         else:
             print(source_coords)
             print("GOT NONE IN COORDINATES")         
-    
-    return render_template('index.html',distance=distance, ola_distance=ola_distance)
+    if source_address is not None:
+        return render_template('index.html',distance=distance, ola_distance=ola_distance, source = source_address, destination = destination_address, 
+                           source_lat=source_lat, source_long=source_lng, dest_lat=destination_lat,dest_long=destination_lng)
+    else:
+        return None
 
 if __name__ == '__main__':
     app.run(debug=True)
